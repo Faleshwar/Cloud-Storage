@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: CloudStorage
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  security:
+    oauth2:
+      client:
+        registration:
+          google: 
+            scope: openid, profile, email
+            client-id: ${G_CLIENT_ID}
+            client-secret: ${G_CLIENT_SECRET}
+  
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+      enabled: true
+  task:
+    scheduling:
+      pool:
+        size: 5
+supabase:
+  url: ${SUPABASE_URL}
+  service:
+    key: ${SUPABASE_SERVICE_KEY}
+
+#logging:
+# level:
+#  org:
+#   springframework:
+#     scheduling: TRACE
+#   root: INFO
