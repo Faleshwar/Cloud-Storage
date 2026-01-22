@@ -24,7 +24,7 @@ It provides APIs for user authentication, file & folder management, and sharing 
 - Soft delete (Trash) and restore
 
 ### Sharing
-- Share files/folders via shareable links
+- Share files via shareable links
 - Set permission (view/edit)
 
 ---
