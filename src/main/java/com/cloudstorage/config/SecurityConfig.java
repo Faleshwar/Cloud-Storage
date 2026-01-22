@@ -1,7 +1,10 @@
 package com.cloudstorage.config;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +32,9 @@ public class SecurityConfig {
 	
 	private final CustomUserDetailsService userDetailsService;
 	private final JwtFilter jwtFilter;
+
+	@Value("${cors.origins}")
+	private String allowedOrigins;
 	
 	
 
@@ -65,8 +71,10 @@ public class SecurityConfig {
 	
 	@Bean
 	public CorsConfigurationSource urlConfiguration() {
+		List<String> origins = Arrays.stream(allowedOrigins.split(",")).map(String::trim).collect(Collectors.toList());
+		
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+		configuration.setAllowedOrigins(origins);
 		configuration.setAllowedHeaders(List.of("*"));
 		configuration.setAllowedMethods(List.of("GET", "PUT", "POST", "DELETE", "PATCH"));
 		configuration.setAllowCredentials(true);
