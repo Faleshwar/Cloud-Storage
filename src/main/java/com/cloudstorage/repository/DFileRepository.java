@@ -25,7 +25,7 @@ public interface DFileRepository extends JpaRepository<DriveFile, UUID>{
 	@Query("SELECT file FROM DriveFile file WHERE file.isDeleted = true AND file.id = :fileId")
 	Optional<DriveFile> findDeleted(@Param("fileId") UUID fileId);
 	
-	@Query("SELECT file FROM DriveFile file WHERE file.isDeleted = true AND file.folder IS NULL AND file.owner.id = :ownerId")
+	@Query("SELECT file FROM DriveFile file LEFT JOIN file.folder f WHERE file.isDeleted = true AND (f IS NULL OR f.isDeleted = false) AND file.owner.id = :ownerId")
 	Set<DriveFile> findTrashed(@Param("ownerId") UUID ownerId);
 	
 	@Query("SELECT file FROM DriveFile file JOIN file.starredBy s JOIN s.user u  WHERE u.id = :userId AND file.isDeleted = false")
